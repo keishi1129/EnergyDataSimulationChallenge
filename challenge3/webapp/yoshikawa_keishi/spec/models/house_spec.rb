@@ -48,4 +48,12 @@ describe House do
       expect(house.errors[:has_child]).to include("value should be only Yes(yes) or No(no)")
     end
   end
+
+  describe '#fullname' do
+    it "can make first and lastname together" do
+      house = build(:house)
+      expect(house.fullname).to eq 'Tom Brown'
+    end
+  end
+
 end
