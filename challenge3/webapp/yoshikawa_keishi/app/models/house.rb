@@ -6,7 +6,6 @@ class House < ApplicationRecord
   validates :city, presence: true
   validates :num_of_people, presence: true, numericality: { only_integer: true }
   validates :has_child, inclusion: { in: ["Yes", "yes", "No", "no"], :message => "value should be only Yes(yes) or No(no)"}
-  
 
   def self.import(file)
     CSV.foreach(file, headers: true) do |row|
@@ -20,6 +19,21 @@ class House < ApplicationRecord
       )
       house.save!
     end
+  end
+
+    def self.import(file)
+    houses_list = []
+    CSV.foreach(file, headers: true) do |row|
+      houses_list << {
+        csv_id:         row["ID"],
+        firstname:      row["Firstname"],
+        lastname:       row["Lastname"],
+        city:           row["City"],
+        num_of_people:  row["num_of_people"],
+        has_child:      row["has_child"],
+      }
+    end
+    create!(houses_list) 
   end
 
   def fullname
@@ -44,10 +58,6 @@ class House < ApplicationRecord
   #   ]    
   # end
 
-  def fullname
-    "#{firstname} #{lastname}"
-  end
-
   def monthly_energyProduction
     data.map{|d| [d.month_of_year, d.energy_production]}
   end
@@ -67,6 +77,4 @@ class House < ApplicationRecord
       {name: "気温", data: monthly_temperature}
     ]    
   end
-
-
 end

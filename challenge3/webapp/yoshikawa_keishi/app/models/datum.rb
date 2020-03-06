@@ -10,9 +10,25 @@ class Datum < ApplicationRecord
   validates :daylight, presence: true
   validates :energy_production, presence: true, numericality: { only_integer: true }
 
+  # def self.import(file)
+  #   CSV.foreach(file, headers: true) do |row|
+  #     datum = new(
+  #       house:             House.find_by(csv_id: row['House']),
+  #       csv_id:            row["ID"],
+  #       label:             row["Label"],
+  #       year:              row["Year"],
+  #       month:             row["Month"],
+  #       temperature:       row["Temperature"],
+  #       daylight:         row["Daylight"],
+  #       energy_production:  row["EnergyProduction"])
+  #     datum.save!
+  #   end
+  # end
+
   def self.import(file)
+    data_list = []
     CSV.foreach(file, headers: true) do |row|
-      datum = new(
+      data_list << {
         house:             House.find_by(csv_id: row['House']),
         csv_id:            row["ID"],
         label:             row["Label"],
@@ -20,9 +36,9 @@ class Datum < ApplicationRecord
         month:             row["Month"],
         temperature:       row["Temperature"],
         daylight:         row["Daylight"],
-        energy_production:  row["EnergyProduction"])
-      datum.save!
+        energy_production:  row["EnergyProduction"]}
     end
+    create!(data_list)
   end
 
   def month_of_year 
