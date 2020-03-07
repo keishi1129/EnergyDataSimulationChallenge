@@ -7,19 +7,19 @@ class House < ApplicationRecord
   validates :num_of_people, presence: true, numericality: { only_integer: true }
   validates :has_child, inclusion: { in: ["Yes", "yes", "No", "no"], :message => "value should be only Yes(yes) or No(no)"}
 
-  def self.import(file)
-    CSV.foreach(file, headers: true) do |row|
-      house = new(
-        csv_id:         row["ID"],
-        firstname:      row["Firstname"],
-        lastname:       row["Lastname"],
-        city:           row["City"],
-        num_of_people:  row["num_of_people"],
-        has_child:      row["has_child"],
-      )
-      house.save!
-    end
-  end
+  # def self.import(file)
+  #   CSV.foreach(file, headers: true) do |row|
+  #     house = new(
+  #       csv_id:         row["ID"],
+  #       firstname:      row["Firstname"],
+  #       lastname:       row["Lastname"],
+  #       city:           row["City"],
+  #       num_of_people:  row["num_of_people"],
+  #       has_child:      row["has_child"],
+  #     )
+  #     house.save!
+  #   end
+  # end
 
     def self.import(file)
     houses_list = []

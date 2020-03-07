@@ -97,4 +97,24 @@ describe Datum do
       expect(datum.errors[:energy_production]).to contain_exactly("is not a number")
      end
   end
+
+  describe '#month_of_year' do
+    it "can make month and year together" do
+      datum = build(:datum)
+      expect(datum.month_of_year).to eq '2012/1'
+    end
+  end
+
+  describe '#city_energy_production' do
+    it "can make month and year together" do
+      kawagoe_house = create(:house, city: 'Kawagoe')
+      ichikawa_house = create(:house, city: 'Ichikawa')
+      kawasaki_house = create(:house, city: 'Kawasaki')
+      create_list(:datum, 10, energy_production: 2000, house: kawagoe_house)
+      create_list(:datum, 11, energy_production: 3000, house: ichikawa_house)
+      create_list(:datum, 12, energy_production: 4000, house: kawasaki_house)
+      expect(Datum.city_energy_production).to eq({"Kawagoe"=>20000, "Ichikawa"=>33000, "Kawasaki"=>48000})
+    end
+  end
+
 end

@@ -50,9 +50,61 @@ describe House do
   end
 
   describe '#fullname' do
-    it "can make first and lastname together" do
+    it "can make firstname and lastname together" do
       house = build(:house)
       expect(house.fullname).to eq 'Tom Brown'
+    end
+  end
+
+  describe '#monthly_energyProduction' do
+    it "can make monthly_energyProduction" do
+      house = create(:house)
+      data = []
+      12.times do |i|
+        i += 1
+        data << create(:datum, month: i, house: house) 
+      end
+      expect(house.monthly_energyProduction).to match data.map{|d| [d.month_of_year, d.energy_production]}
+    end
+  end
+
+  describe '#monthly_daylight' do
+    it "can make monthly_daylight" do
+      house = create(:house)
+      data = []
+      12.times do |i|
+        i += 1
+        data << create(:datum, month: i, house: house) 
+      end
+      expect(house.monthly_daylight).to match data.map{|d| [d.month_of_year, d.daylight]}
+    end
+  end
+
+  describe '#monthly_temperature' do
+    it "can make monthly_temperature" do
+      house = create(:house)
+      data = []
+      12.times do |i|
+        i += 1
+        data << create(:datum, month: i, house: house) 
+      end
+      expect(house.monthly_temperature).to match data.map{|d| [d.month_of_year, d.temperature.to_f]}
+    end
+  end
+
+  describe '#monthly_data' do
+    it "can make monthly_data" do
+      house = create(:house)
+      data = []
+      12.times do |i|
+        i += 1
+        data << create(:datum, month: i, house: house) 
+      end
+      expect(house.monthly_data).to match [
+        {name: "日照エネルギー", data: data.map{|d| [d.month_of_year, d.daylight]}},
+        {name: "エネルギー産出量", data: data.map{|d| [d.month_of_year, d.energy_production]}},
+        {name: "気温", data: data.map{|d| [d.month_of_year, d.temperature.to_f]}}
+      ]    
     end
   end
 
