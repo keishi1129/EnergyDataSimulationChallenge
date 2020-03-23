@@ -1,10 +1,12 @@
 class House < ApplicationRecord
   has_many :data, dependent: :destroy
-  validates :csv_id, presence: true, numericality: { only_integer: true }
+  validates :csv_id, presence: true
+  validates :csv_id, numericality: { only_integer: true }, if: -> { csv_id.present? }
   validates :firstname, presence: true
   validates :lastname, presence: true
   validates :city, presence: true
-  validates :num_of_people, presence: true, numericality: { only_integer: true }
+  validates :num_of_people, presence: true
+  validates :num_of_people, presence: true, numericality: { only_integer: true }, unless: Proc.new { num_of_people.blank? }
   validates :has_child, inclusion: { in: ["Yes", "yes", "No", "no"], :message => "value should be only Yes(yes) or No(no)"}
 
   # def self.import(file)

@@ -4,7 +4,7 @@ describe Datum do
     it "is invalid without a csv_id" do
      datum = build(:datum, csv_id: nil)
      datum.valid?
-     expect(datum.errors[:csv_id]).to contain_exactly("can't be blank", "is not a number")
+     expect(datum.errors[:csv_id]).to contain_exactly("is not a number")
     end
 
     it "is invalid without a wrong type of input filled in csv_id" do
@@ -16,7 +16,7 @@ describe Datum do
     it "is invalid without a label" do
       datum = build(:datum, label: nil)
       datum.valid?
-      expect(datum.errors[:label]).to contain_exactly("can't be blank", "is not a number")
+      expect(datum.errors[:label]).to contain_exactly("is not a number")
     end
 
     it "is invalid without a wrong type of input filled in label" do
@@ -34,7 +34,7 @@ describe Datum do
     it "is invalid without a year" do
      datum = build(:datum, year: nil)
      datum.valid?
-     expect(datum.errors[:year]).to contain_exactly("can't be blank", "is not a number")
+     expect(datum.errors[:year]).to contain_exactly("is not a number")
     end
 
     it "is invalid without a wrong type of input filled in year" do
@@ -52,7 +52,7 @@ describe Datum do
     it "is invalid without a month" do
       datum = build(:datum, month: nil)
       datum.valid?
-      expect(datum.errors[:month]).to contain_exactly("can't be blank", "is not a number")
+      expect(datum.errors[:month]).to contain_exactly("is not a number")
     end
 
     it "is invalid without a wrong type of input filled in month" do
@@ -88,7 +88,7 @@ describe Datum do
     it "is invalid without an energy_production" do
       datum = build(:datum, energy_production: nil)
       datum.valid?
-      expect(datum.errors[:energy_production]).to contain_exactly("can't be blank", "is not a number")
+      expect(datum.errors[:energy_production]).to contain_exactly("is not a number")
      end
 
     it "is invalid without a wrong type of input filled in energy_production" do
